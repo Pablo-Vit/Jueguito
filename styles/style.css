@@ -1,0 +1,26 @@
+*{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.cas{
+    border: 1px solid;
+    height: 30px;
+    width: 30px;
+    background-color: gray;
+    border-radius: 3px;
+}
+
+.casd{
+    background-color: blue;
+    border-radius: 3px;
+}
+
+.tab-map{
+    border-radius: 4px;
+    border-color: black;
+    border: 1px solid;
+}
