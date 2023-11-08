@@ -1,6 +1,6 @@
 let cols = 3;
 let fil = 3;
-
+let moves = 0;
 
 function genMap() {
     let map = document.createElement("div");
@@ -30,10 +30,56 @@ function genMap() {
     console.log('Tablero Generado');
 }
 
-function reveal(f,c) {
-    
+function reveal(f, c) {
+    fetch("save.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `data=${encodeURIComponent(f + "-" + c)}`,
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
+        });
+}
+
+function markMap() {
+    fetch("fetch.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `last=${encodeURIComponent(moves)}`,
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.text != 'No hay nuevo click') {
+                if (data.cant > moves) {
+                    moves = data.cant;
+                }
+                if (data.move.length > 0) {
+                    let id = data.move[0];
+                    let w = id.indexOf("-");
+                    let f = parseInt(id.slice(0,w));
+                    let c = parseInt(id.slice(w+1));
+                    document.getElementById(id).innerText = 'X';
+                    setTimeout(function () {
+                        document.getElementById(id).innerHTML = `<button class="cas" onclick="reveal(${f},${c});"></button>`;
+                    }, 1500);
+                }
+            }
+            setTimeout(markMap, 300);
+        })
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
+        });
 }
 
 genMap();
-
+markMap();
 
