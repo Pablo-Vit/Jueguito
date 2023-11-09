@@ -1,6 +1,7 @@
 let cols = 3;
 let fil = 3;
 let moves = 0;
+let act = '';
 
 function genMap() {
     let map = document.createElement("div");
@@ -67,7 +68,16 @@ function markMap() {
                     let w = id.indexOf("-");
                     let f = parseInt(id.slice(0,w));
                     let c = parseInt(id.slice(w+1));
+                    try {
+                        let aw = act.indexOf("-");
+                        let af = parseInt(act.slice(0,aw));
+                        let ac = parseInt(act.slice(aw+1));
+                        document.getElementById(act).innerHTML = `<button class="cas" onclick="reveal(${af},${ac});"></button>`
+                    } catch (error) {
+                        console.log(`El error es: ${error}`)
+                    }
                     document.getElementById(id).innerText = 'X';
+                    act = id;
                     setTimeout(function () {
                         document.getElementById(id).innerHTML = `<button class="cas" onclick="reveal(${f},${c});"></button>`;
                     }, 1500);
