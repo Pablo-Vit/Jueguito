@@ -44,7 +44,7 @@ function reveal(f, c) {
             console.log(data);
         })
         .catch(error => {
-            console.error("Error en la solicitud:", error);
+            console.error(`Ocurrio un error ${error}`);
         });
 }
 
@@ -86,7 +86,7 @@ function markMap() {
             setTimeout(markMap, 300);
         })
         .catch(error => {
-            console.error("Error en la solicitud:", error);
+            console.error(`Ocurrio un error ${error}`);
         });
 }
 
