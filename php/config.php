@@ -1,8 +1,8 @@
 <?php
-$hostname = "yby.h.filess.io:3307";
-$username = "cosas_readyorder";
-$password = "209a93af41d02b54f23720770e8e241db7987158";
-$database = "cosas_readyorder";
+$hostname = "xtl.h.filess.io:3305";
+$username = "cosas_inventedno";
+$password = "788c813f1a6323733c2aad2320853c67d3dcf94d";
+$database = "cosas_inventedno";
 
 $conn = new mysqli($hostname, $username, $password, $database);
 
