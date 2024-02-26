@@ -1,8 +1,8 @@
 <?php
-$hostname = "xtl.h.filess.io:3305";
-$username = "cosas_inventedno";
-$password = "788c813f1a6323733c2aad2320853c67d3dcf94d";
-$database = "cosas_inventedno";
+$hostname = "mysql.clawnhost.com";
+$username = "pteras-user";
+$password = "ClawN123";
+$database = "Webadas";
 
 $conn = new mysqli($hostname, $username, $password, $database);
 

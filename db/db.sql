@@ -5,19 +5,23 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
-DROP TABLE IF EXISTS `msgs`;
-CREATE TABLE `msgs` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `em_id` int NOT NULL,
-  `re_id` int NOT NULL,
-  `text` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `msgs_ibfk_1` (`em_id`),
-  KEY `msgs_ibfk_2` (`re_id`),
-  CONSTRAINT `msgs_ibfk_1` FOREIGN KEY (`em_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `msgs_ibfk_2` FOREIGN KEY (`re_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `descr` varchar(1024) DEFAULT 'Sin descripcion.',
+  `is_admin` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `is_admin`) VALUES
+(5,	'pepe',	'pepe@gmail.com',	'9a45f7fca7261712',	'2023-10-26 01:35:44',	0),
+(6,	'Altokeso',	'altokeso23@gmail.com',	'9a45f7fca7261712',	'2023-10-26 01:36:06',	0),
+(7,	'Grser',	'Isaacxino407@gmail.com',	'a0953ddc9e2605b6',	'2023-10-27 00:45:49',	0),
+(8,	'dsa',	'asd@gmail.com',	'9a45f7fca7261712',	'2023-10-28 17:36:24',	0),
+(9,	'jaime',	'jaimito@gmail.com',	'9a45f7fca7261712',	'2023-10-28 17:36:44',	0);
+
 
 INSERT INTO `msgs` (`id`, `em_id`, `re_id`, `text`, `created_at`) VALUES
 (4,	6,	5,	'asd',	'2023-10-27 19:01:56'),
@@ -48,21 +52,20 @@ INSERT INTO `msgs` (`id`, `em_id`, `re_id`, `text`, `created_at`) VALUES
 (29,	6,	5,	'jajajaja',	'2023-11-09 01:21:53'),
 (30,	6,	5,	'aaa',	'2023-11-09 01:22:45');
 
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_admin` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `tweets` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `text` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `is_admin`) VALUES
-(5,	'pepe',	'pepe@gmail.com',	'9a45f7fca7261712',	'2023-10-26 01:35:44',	0),
-(6,	'Altokeso',	'altokeso23@gmail.com',	'9a45f7fca7261712',	'2023-10-26 01:36:06',	0),
-(7,	'Grser',	'Isaacxino407@gmail.com',	'a0953ddc9e2605b6',	'2023-10-27 00:45:49',	0),
-(8,	'dsa',	'asd@gmail.com',	'9a45f7fca7261712',	'2023-10-28 17:36:24',	0),
-(9,	'jaime',	'jaimito@gmail.com',	'9a45f7fca7261712',	'2023-10-28 17:36:44',	0);
+ALTER TABLE `tweets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `tweets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `tweets`
+  ADD CONSTRAINT `tweets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
