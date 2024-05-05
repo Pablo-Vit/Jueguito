@@ -7,16 +7,47 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <header><a href="php/logout.php">logout</a></header>
-
-    <div id="busc" class="busc">
-        <form action="" id="busc-form">
-            <input type="text" name="buscid" id="busc-id" placeholder="Ingrese el codigo (Si tiene uno)" required>
-            <input type="text" name="buscpass" id="busc-pass" placeholder="Contraseña">
-            <button id="busc-btn">Ingresar</button>
-        </form>
-    </div>
+    <header>
+        <a href="api/logout.php">logout</a>
+        <p id="username"></p>
+    </header>
     
+
+    <div style="display: flex;">
+        <p class="busc">Busca(o crea) una partida</p>
+        <p class="mygames">Tus partidas</p>
+        <p class="finishedgames">Tus partidas finalizadas</p>
+    </div>
+
+    <div class="megadiv">
+        <div id="busc" class="busc">
+            <div id="gestbtns">
+                <button id="joingamebtn" onclick="joinGame();">Tengo codigo y contraseña</button>
+                <button id="creategamebtn" onclick="createForm();">Crear partida</button>
+            </div>
+
+            <table id="tbusc">
+            </table>
+        </div>
+        
+        <div id="mygames" class="mygames">
+            <table id="startedbusc">
+                <tr>
+                    <td class="busc-td">Nombre</td>
+                    <td class="busc-td">Tamaño</td>
+                    <td class="busc-td">Estado</td>
+                </tr>
+            </table>
+        </div>
+        <div id="finishedgames" class="finishedgames">
+            <table id="finishedbusc">
+                <tr>
+                    <td class="busc-td">Nombre</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
 </body>
 </html>
 <script src="js/functions.js"></script>

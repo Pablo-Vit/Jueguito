@@ -1,4 +1,9 @@
-fetch("../php/check-log.php")
+fetch("../api/check-log.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+})
 .then(response => response.json())
 .then(data => {
     console.log(data);
@@ -18,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Aquí podrías realizar la validación de los campos
 
         // Enviar los datos al servidor para autenticación
-        fetch("../php/login.php", {
+        fetch("../api/login.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",

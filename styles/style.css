@@ -1,6 +1,42 @@
+*{
+    cursor: url(../cursor.svg) 2 2, auto;
+}
+body{
+    display: grid;
+}
 .busc{
-    margin-right: auto;
-    margin-left: auto;
+    place-self: center;
     border: 1px solid black;
     border-radius: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.busc-td{
+    border: 1px solid black;
+    text-align: center;
+}
+.priv{
+    text-align: center;
+}
+
+.megadiv{
+    display: flex;
+}
+
+.mygames{
+    justify-self: right;
+    place-self: right;
+    padding: 3px;
+    float: right;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.finishedgames{
+    justify-self: right;
+    place-self: right;
+    padding: 3px;
+    float: right;
+    border: 1px solid black;
+    border-radius: 3px;
 }

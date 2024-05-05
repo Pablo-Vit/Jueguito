@@ -1,4 +1,9 @@
-fetch("../php/check-log.php")
+fetch("../api/check-log.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+})
 .then(response => response.json())
 .then(data => {
     console.log(data);
@@ -17,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = registerForm.querySelector('input[name="password"]').value;
 
 
-        fetch("../php/register.php", {
+        fetch("../api/register.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
