@@ -43,17 +43,17 @@ ALTER TABLE `tweets`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `tweets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
+  ADD KEY `user_id` (`user_id`);
 
 ALTER TABLE `tweets`
-  ADD CONSTRAINT `tweets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `ibfk_1` FOREIGN KEY (`tweets_user_id`) REFERENCES `users` (`id`);
 
 ALTER TABLE `msgs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `em_id` (`em_id`),
-  ADD KEY `re_id` (`re_id`);
+  ADD KEY `msg_em_id` (`em_id`),
+  ADD KEY `msg_re_id` (`re_id`);
 
 ALTER TABLE `msgs`
-  ADD CONSTRAINT `msgs_ibfk_1` FOREIGN KEY (`em_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `msgs_ibfk_1` FOREIGN KEY (`re_id`) REFERENCES `users` (`id`);
-
+  ADD CONSTRAINT `msgs_ibfk_1` FOREIGN KEY (`msg_em_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `msgs_ibfk_2` FOREIGN KEY (`msg_re_id`) REFERENCES `users` (`id`);

@@ -39,11 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     if ($hg = fopen('games.json', 'r+')) {
                                         $g = json_decode(fread($hg, filesize('games.json')), true);
                                         if ($ub = array_search((string) $game,$g["oldgames"])) {
-                                            $ult = count($g["oldgames"])-1;
-                                            $a = $g["oldgames"][$ub];
-                                            $g["oldgames"][$ub] = $g["oldgames"][$ult];
-                                            $g["oldgames"][$ult] = $a;
-                                            array_pop($g["oldgames"]);
+                                            unset($g["oldgames"][$ub]);
+                                            $g["oldgames"] = array_values($g["oldgames"]);
                                             array_push($g["endedgames"], $game);
                                         }
                                         ftruncate($hg,0);
@@ -57,7 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 fwrite($fp,json_encode($gdata));
                                 $r = array(
                                     "map" => $gdata["mapa"],
-                                    "move" => $gdata["move"]
+                                    "move" => $gdata["move"],
+                                    "myf" => $gdata["pl1"] == $_SESSION["id"] ? $gdata["f1"] : $gdata["f2"]
                                 );
                             } else {
                                 $r = array(
@@ -81,4 +79,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-?>

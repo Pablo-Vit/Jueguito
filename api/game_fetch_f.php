@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $filename = '../games/' . $x . '.json';
                     if ($fp = fopen($filename, 'r')) {
                         $gdata = json_decode(fread($fp, filesize($filename)), true);
-                        if ($gdata["pl1"] === -1 || $gdata["pl2"] === -1) {
+                        if ($gdata["pl1"] === $_SESSION["id"] || $gdata["pl2"] === $_SESSION["id"]) {
                             $arrA = array();
                             $arrV = array();
                             array_push($arrA, "name");
@@ -32,4 +32,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-?>

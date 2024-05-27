@@ -10,11 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $r = array();
                 $gdata = json_decode(fread($fp, filesize($filename)), true);
                 if (($_SESSION["id"] == $gdata["pl1"]) || ($_SESSION["id"] == $gdata["pl2"])) {
-
                         $r = array(
                             "map" => $gdata["mapa"],
                             "turno" => $gdata["turno"] == $_SESSION["id"] ? true : false,
-                            "move" => $gdata["move"]
+                            "move" => $gdata["move"],
+                            "myf" => $gdata["pl1"] == $_SESSION["id"] ? $gdata["f1"] : $gdata["f2"]
                         );    
                 }
                 echo json_encode($r);
@@ -22,4 +22,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-?>
+

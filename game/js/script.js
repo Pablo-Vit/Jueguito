@@ -47,12 +47,17 @@ function getInfo() {
             console.log(data);
             document.getElementById("title").innerText = 'Jugando: ' + data.name;
             move = data.move;
-            p = document.createElement("p");
-            rival = 'Tu oponente es: ';
-            rival += data.rival == null ? 'En espera..' : data.rival;
+            let p = document.createElement("p");
+            let rival = 'Tu oponente es: ' + (data.rival == null ? 'En espera..' : data.rival);
             p.innerText = rival;
             p.id = 'p-rival';
-            document.getElementById("divi").appendChild(p);
+            p.className = 'p-rival';
+            document.getElementById("info").appendChild(p);
+            let fichas = document.createElement("p");
+            fichas.className = "fichas";
+            fichas.innerText = 'Fichas: ' + data.myf;
+            fichas.id = 'fichas';
+            document.getElementById("info").appendChild(fichas);
             let size = 1;
             if (data.mapa == 1) {
                 size = 5;
@@ -121,15 +126,17 @@ function switchMap(turno, size) {
             let id = i + '-' + j;
             if (mapa[i][j] == 0) {
                 if (turno) {
-                    let btn = document.createElement("button");
-                    btn.className = 'cas';
-                    btn.id = 'btn.' + id;
-                    btn.innerText = 'X';
-                    let atr = document.createAttribute("onclick");
-                    atr.value = 'placeToken("' + id + '");';
-                    btn.setAttributeNode(atr);
-                    document.getElementById(id).innerHTML = '';
-                    document.getElementById(id).appendChild(btn);
+                    if (!((move == 0) && ((i == 0 || i == size-1) && (j == 0 || j == size-1)))) {
+                        let btn = document.createElement("button");
+                        btn.className = 'cas';
+                        btn.id = 'btn.' + id;
+                        btn.innerText = 'X';
+                        let atr = document.createAttribute("onclick");
+                        atr.value = 'placeToken("' + id + '");';
+                        btn.setAttributeNode(atr);
+                        document.getElementById(id).innerHTML = '';
+                        document.getElementById(id).appendChild(btn);    
+                    }
                 } else {
                     document.getElementById(id).innerHTML = '';
                 }
@@ -167,6 +174,7 @@ function placeToken(id) {
                         fetchMap();
                     }, 500);
                 }
+                document.getElementById('fichas').innerText = 'Fichas: ' + data.myf;
             }
         });
 }
@@ -204,6 +212,7 @@ function fetchMap() {
                 localStorage.removeItem('game');
                 window.location.href = '../';
             }
+            document.getElementById('fichas').innerText = 'Fichas: ' + data.myf;
         });
 }
 
@@ -215,11 +224,11 @@ function editMap(mapnew) {
                 if (mapnew[i][j] != mapa[i][j]) {
                     if (mapa[i][j] == 0) {
                         color = mapnew[i][j] == myid ? 1 : 2;
-                        document.getElementById(i+'-'+j).innerHTML = '<img src="imgs/ficha' + color + '-1.png" alt="" srcset="">';            
+                        document.getElementById(i + '-' + j).innerHTML = '<img src="imgs/ficha' + color + '-1.png" alt="" srcset="">';
                     } else {
-                        changeColor(i, j);    
+                        changeColor(i, j);
                     }
-                    
+
                 }
             }
         }
@@ -232,12 +241,12 @@ function changeColor(y, x) {
     let cantsprites = 4;
     for (let i = 1; i <= cantsprites; i++) {
         setTimeout(() => {
-            document.getElementById(y+'-'+x).innerHTML = '<img src="imgs/ficha' + color + '-' + i + '.png" alt="" srcset="">';
+            document.getElementById(y + '-' + x).innerHTML = '<img src="imgs/ficha' + color + '-' + i + '.png" alt="" srcset="">';
         }, timer * i);
     }
     setTimeout(() => {
         color = color == 1 ? 2 : 1;
-        document.getElementById(y+'-'+x).innerHTML = '<img src="imgs/ficha' + color + '-1.png" alt="" srcset="">';
+        document.getElementById(y + '-' + x).innerHTML = '<img src="imgs/ficha' + color + '-1.png" alt="" srcset="">';
     }, timer * 5);
 }
 
@@ -251,14 +260,14 @@ function checkWinner() {
                     f1++;
                 } else {
                     f2++;
-                }    
+                }
             }
         });
     });
     let winner = f1 >= f2 ? true : false;
-    console.log('f1: '+f1);
-    console.log('f2: '+f2);
-    document.getElementById("p-rival").innerText = winner ? 'Has ganado':'Has perdido';
+    console.log('f1: ' + f1);
+    console.log('f2: ' + f2);
+    document.getElementById("p-rival").innerText = winner ? 'Has ganado' : 'Has perdido';
 }
 function check() {
     let f1 = 0;
@@ -272,6 +281,6 @@ function check() {
             }
         }
     }
-    console.log('f1: '+f1);
-    console.log('f2: '+f2);
+    console.log('f1: ' + f1);
+    console.log('f2: ' + f2);
 }

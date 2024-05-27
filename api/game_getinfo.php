@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 array_push($arrV,$gdata["move"]);
                 array_push($arrA,"myid");
                 array_push($arrV,$_SESSION["id"]);
+                array_push($arrA,"myf");
+                array_push($arrV, $gdata["pl1"] == $_SESSION["id"] ? $gdata["f1"] : $gdata["f2"]);
                 array_push($arrA,"turno");
                 array_push($arrV,$gdata["turno"] === $_SESSION["id"] ? true : false);
                 array_push($arrA,"mapa");

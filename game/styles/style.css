@@ -46,9 +46,25 @@
     background-color: #bbbbbb;
     width: fit-content;
     height: fit-content;
-    
 }
 
 body{
     background-color: #aaaaaa;
+}
+
+.info{
+    font-style: italic;
+}
+
+.fichas{
+    justify-self:end;
+}
+.p-rival{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-shadow: 1px 1px 1px 1px black;
+}
+.salir{
+    border: 1px solid black;
+    background-color: transparent;
+    background: transparent;
 }

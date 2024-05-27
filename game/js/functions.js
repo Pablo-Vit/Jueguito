@@ -90,6 +90,58 @@ function markMap() {
         });
 }
 
-genMap();
-markMap();
+function checkY(map, y) {
+    return ((y >= 0) && (y < map.length)) ? true : false;
+}
 
+function checkX(map, x) {
+    return ((x >= 0) && (x < map.length)) ? true : false;
+}
+
+function searchEnemy(map, pl1, pl2, y, x) {
+    let r = [];
+    for (let i = -1; i < 2; i++) {
+        if (checkY(map, y+i)) {
+            for (let j = -1; j < 2; j++) {
+                if (checkY(map, x+j)) {
+                    if (map[y+i][x+j] == pl2) {
+                        if (tryConvertEnemy(map, pl1, y+i, x+j)) {
+                            info = {
+                                y : y+i,
+                                x : x+j,
+                                now : pl1
+                            }
+                            r.push(info)
+                        }
+                    }
+                }
+            }    
+        }
+    }
+    return r;
+}
+
+function tryConvertEnemy(map, pl1, y, x) {
+    let limiter = 0;
+    for (let i = -1; i < 2; i++) {
+        if (checkY(map, y+i)) {
+            for (let j = -1; j < 2; j++) {
+                if (checkY(map, x+j)) {
+                    if (limiter == 4) {
+                        return false;
+                    }
+                    limiter++;
+                    let vy = y+i;
+                    let vx = x+j;
+                    let cy = y+(i*-1);
+                    let cx = x+(j*-1);
+                    if ((checkY(cy) && checkX(cx))) {
+                        if ((map[vy][vx] == pl1) && (map[cy][cx] == pl1)) {
+                            return true;   
+                        }
+                    }
+                }
+            }    
+        }
+    }
+}

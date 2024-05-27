@@ -25,11 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             if ($hg = fopen('games.json', 'r+')) {
                                 $g = json_decode(fread($hg, filesize('games.json')), true);
                                 if ($ub = array_search((string) $game,$g["currentgames"])) {
-                                    $ult = count($g["currentgames"])-1;
-                                    $a = $g["currentgames"][$ub];
-                                    $g["currentgames"][$ub] = $g["currentgames"][$ult];
-                                    $g["currentgames"][$ult] = $a;
-                                    array_pop($g["currentgames"]);
+                                    unset($g["currentgames"][$ub]);
+                                    $g["currentgames"] = array_values($g["currentgames"]);
                                     array_push($g["oldgames"], $game);
                                 }
                                 ftruncate($hg,0);
@@ -54,4 +51,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-?>
