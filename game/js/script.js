@@ -19,10 +19,26 @@ let move;
 let mapa;
 let myid;
 let fetinter = -1;
-
+const msgs = ['¡Gran movimiento!','Gracias', '¿Por que?', 'Bien hecho', 'Lo lamento', 'Cuidado'];
+let max = null;
+let rivalname;
+let myname;
+let firstmsg = true;
 
 if (!(game = localStorage.getItem("game"))) {
     window.location.href = '../';
+}
+
+function genBtns() {
+    let div = document.getElementById("chat-btns");
+    for (let i = 0; i < msgs.length; i++) {
+        let btn = document.createElement("button");
+        btn.innerText = msgs[i];
+        let atr = document.createAttribute("onclick");
+        atr.value = `msgSend(${i});`; 
+        btn.setAttributeNode(atr);
+        div.appendChild(btn)
+    }
 }
 
 function getInfo() {
@@ -45,10 +61,13 @@ function getInfo() {
                 window.location.href = '../';
             }
             console.log(data);
+            
             document.getElementById("title").innerText = 'Jugando: ' + data.name;
             move = data.move;
             let p = document.createElement("p");
-            let rival = 'Tu oponente es: ' + (data.rival == null ? 'En espera..' : data.rival);
+            rivalname = data.rival;
+            myname = data.myname;
+            let rival = 'Tu oponente es: ' + (rivalname == null ? 'En espera..' : rivalname);
             p.innerText = rival;
             p.id = 'p-rival';
             p.className = 'p-rival';
@@ -83,6 +102,8 @@ function getInfo() {
             } else {
                 checkWinner();
             }
+            genBtns();
+            msgFetch();
         });
 }
 
@@ -191,13 +212,10 @@ function fetchMap() {
         .then(data => {
             console.log(data);
             if (data.error == null) {
+
                 size = mapa.length;
                 editMap(data.map);
                 move = data.move;
-                if (move == -255) {
-                    clearInterval(fetinter);
-                    checkWinner();
-                }
                 mapa = data.map;
                 if (data.turno) {
                     clearInterval(fetinter);
@@ -207,6 +225,13 @@ function fetchMap() {
                     fetinter = setInterval(() => {
                         fetchMap();
                     }, 500);
+                }
+                if (move == -255) {
+                    clearInterval(fetinter);
+                    checkWinner();
+                } else if(move == 1 && rivalname == null){
+                    document.getElementById('p-rival').innerText = data.rival;
+                    rivalname = data.rival;
                 }
             } else if (data.error == 0) {
                 localStorage.removeItem('game');
@@ -269,18 +294,53 @@ function checkWinner() {
     console.log('f2: ' + f2);
     document.getElementById("p-rival").innerText = winner ? 'Has ganado' : 'Has perdido';
 }
-function check() {
-    let f1 = 0;
-    let f2 = 0;
-    for (let i = 0; i < mapa.length; i++) {
-        for (let j = 0; j < mapa[i].length; j++) {
-            if (mapa[i][j] == myid) {
-                f1++;
-            } else {
-                f2++;
-            }
+
+function msgSend(msg) {
+    fetch("../api/msg_new.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `cont=${encodeURIComponent(msg)}&game=${encodeURIComponent(game)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error(`Ocurrio un error ${error}`);
+    });
+}
+
+function msgFetch() {
+    fetch("../api/msg_fetch.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `game=${encodeURIComponent(game)}`+ ( max != null ? `&max=${encodeURIComponent(max)}` : ``)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        let div = document.getElementById("chat-msgs");
+        for (let i = 0; i < data.length; i++) {
+            let p = document.createElement("p");
+            p.className = 'msg';
+            p.innerText = `${data[i].me ? myname : rivalname}: ${msgs[data[i].cont]}`;
+            div.appendChild(p);
         }
-    }
-    console.log('f1: ' + f1);
-    console.log('f2: ' + f2);
+        if (max == null) {
+            max = data.length;
+        } else {
+            max += data.length;
+        }
+        
+        setTimeout(() => {
+            msgFetch();
+        }, 500);
+    })
+    .catch(error => {
+        console.error(`Ocurrio un error ${error}`);
+    });
 }

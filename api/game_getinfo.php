@@ -20,6 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $arrV = array();
                 array_push($arrA,"name");
                 array_push($arrV,$gdata["name"]);
+                array_push($arrA,"myname");
+                $sql = "SELECT username FROM users WHERE id = " . $_SESSION["id"];
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        array_push($arrV,$row["username"]);
+                    }
+                } else {
+                    array_push($arrV, null);
+                }
                 array_push($arrA,"rival");
                 $rivalid = -1;
                 if ($gdata["pl1"] != $_SESSION["id"]) {

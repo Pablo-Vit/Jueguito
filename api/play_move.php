@@ -3,6 +3,13 @@ session_start();
 require_once("funcs.php");
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_SESSION["id"])) {
+        if (!isset($_POST["game"])) {
+            $r = array(
+                "error" => 3
+            );
+            echo json_encode($r);
+            exit;
+        }
         $game = $_POST["game"];
         $filename = '../games/' . $game . '.json';
         if(file_exists($filename)){

@@ -1,19 +1,10 @@
 *{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
     cursor: url(../../cursor.svg) 12 12, auto;
 }
 
-.cas{
-    justify-self: center;
-    background-color: transparent;
-    width: 30px;
-    height: 30px;
-    border: 0px;
-    margin: auto;
+.megadiv{
+    display: flex;
+    width: 100%;
 }
 
 .casB{
@@ -21,6 +12,7 @@
     border-radius: 3px;
     height: 30px;
     width: 30px;
+    margin: 0px;
 }
 
 .casA{
@@ -28,6 +20,7 @@
     border-radius: 3px;
     height: 30px;
     width: 30px;
+    margin: 0px;
 }
 
 .tab-map{
@@ -38,6 +31,8 @@
 }
 
 .divi{
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 20px;
     padding: 5px;
     border: 1px solid black;
@@ -46,10 +41,12 @@
     background-color: #bbbbbb;
     width: fit-content;
     height: fit-content;
+    text-align: center;
 }
 
 body{
     background-color: #aaaaaa;
+    display:grid;
 }
 
 .info{
@@ -64,7 +61,50 @@ body{
     text-shadow: 1px 1px 1px 1px black;
 }
 .salir{
+    place-self: center;
     border: 1px solid black;
-    background-color: transparent;
-    background: transparent;
+    background-color: #FEEEEE;
+    width: min-content;
+}
+
+
+.chat{
+    align-self: flex-start;
+    width: 10vw;
+    padding: 5px;
+    border: 1px solid black;
+    height: fit-content;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.chat::-webkit-scrollbar {
+    display: none;
+}
+.msgs{
+    border: 1px solid black;
+    border-radius: 3px;
+    max-height: 42vh;
+    padding: 5px;
+    margin-top: 5px;
+    overflow-y: auto;
+    background-color: #DDDDDD;
+}
+.msgs::-webkit-scrollbar {
+    display: none;
+}
+.btns{
+    border: 1px solid black;
+    border-radius: 3px;
+    height: fit-content;
+    max-height: 18vh;
+    padding: 5px;
+    overflow-y: auto;
+}
+.btns::-webkit-scrollbar {
+    display: none;
+}
+.msg{
+    margin: 1px;
+    margin-top: 3px;
+    font-family: 'Courier New', Courier;
 }

@@ -1,8 +1,22 @@
-let act = '';
 
+fetch("../api/msg_new.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `cont=${encodeURIComponent("¡Gran Movimiento!")}&game=${encodeURIComponent('bmOvSF')}`
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(`Ocurrio un error ${error}`);
+});
+
+let act = '';
 let cols = 3;
 let fil = 3;
-
 
 function genMap() {
     let map = document.createElement("div");
